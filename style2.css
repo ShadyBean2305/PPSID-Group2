@@ -1,0 +1,83 @@
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh; 
+    background-color: #e9ecef;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e9ecef;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.cocktail {
+    width: 90%;
+    max-width: 650px;
+    background-color: #ffffff;
+    margin: 60px auto;
+    padding: 25px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.cocktail:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.cocktail-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #007BFF;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.cocktail-glass,
+.cocktail-how-to-mix {
+    font-size: 19px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.cocktail-ingredients {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.cocktail-ingredients li {
+    font-size: 17px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 7px;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.cocktail-ingredients li:hover {
+    background: #e0e0e0;
+}
+
+.drink-counter {
+    color: #6c757d;
+    text-align: center;
+    margin-top: 25px;
+    font-style: italic;
+    font-size: 16px;
+}
