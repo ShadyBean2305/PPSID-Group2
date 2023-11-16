@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  php-env:
+    build:
+      context: .  
+      dockerfile: Dockerfile 
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 9000:80
+    depends_on:
+      - mariadb_db
+  mariadb_db:
+    image: mariadb:10.6
+    volumes:
+    - ./db/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 9001:80
+    environment:
+      PMA_ARBITRARY: 1  
+    depends_on:
+      - mariadb_db
