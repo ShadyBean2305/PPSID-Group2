@@ -1,0 +1,114 @@
+/* Basic Reset */
+body, h1, h2, p, a {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body and Main Content Styles */
+body {
+    background-color: #e9ecef; /* Consistent background color */
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.main-content {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+.welcome-container {
+    background-color: #e9ecef;
+    padding: 20px;
+    text-align: center;
+    margin-top: 50px; /* Increased margin-top for pushing down the container */
+}
+
+.welcome-container h1 {
+    font-size: 2em;
+    color: #007BFF; /* Consistent color for the title */
+}
+
+/* Admin Section Styles */
+.admin-section {
+    margin-top: 20px;
+}
+
+.admin-section h2 {
+    font-size: 1.5em;
+    color: #007bff;
+}
+
+/* Footer Styles */
+.admin-footer {
+    text-align: center;
+    padding: 15px 0;
+    background-color: #e9ecef;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Navigation Bar Styles */
+#hoverArea {
+    position: fixed;
+    width: 100%;
+    height: 20px;
+    top: 0;
+    z-index: 999;
+}
+
+#navbar {
+    overflow: hidden;
+    max-height: 0;
+    position: fixed;
+    width: 100%;
+    background: #e9ecef;
+    top: 0;
+    text-align: center;
+    z-index: 1000;
+    transition: max-height 1s ease;
+}
+
+#navbar.show {
+    max-height: 100px; /* Adjust as necessary */
+}
+
+#logoutBtn {
+    padding: 8px 16px;
+    margin-right: 30px; /* Adjust as per your layout */
+    font-size: 16px;
+    background: #007bff; /* Bootstrap primary color for reference */
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#logoutBtn:hover {
+    background: #0056b3; /* Darken the button a bit when hovering */
+}
+
+/* Consistent Button Styles */
+.button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}

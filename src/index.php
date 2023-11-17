@@ -1,12 +1,59 @@
+<?php
+    session_start();
+    if (isset($_SESSION['user'])) {
+        header("Location: admin.php");
+        exit();
+    }
+
+    if (isset($_POST['loginSubmit'])) {
+        $conn = new mysqli('mariadb_db', 'root', 'root', 'users');
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $username = $conn->real_escape_string($_POST['username']);
+        $password = $conn->real_escape_string($_POST['password']);
+
+        $sql = "SELECT * FROM users WHERE username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            if ($user['password'] === $password) {
+                $_SESSION['user'] = $user; // Store user data in session
+                header("Location: admin.php"); // Redirect to admin page
+                exit();
+            } else {
+                $loginError = 'Incorrect password';
+            }
+        } else {
+            $loginError = 'User not found';
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Cocktail Website</title>
-    <link rel="stylesheet" type="text/css" href="style2.css">
+    <link rel="stylesheet" type="text/css" href="landing.css">
 </head>
 <body>
-    <script src="script.js" defer></script>
+    <script src="landing.js" defer></script>
+
+    <div id="hoverArea"></div>
+
+    <div id="navbar" class="hidden">
+        <button id="loginBtn" onclick="openModal()">Login</button>
+    </div>
+
     <header>
         <div class="welcome-container">
             <h1>Welcome to Alt Test Cocktails</h1>
@@ -15,52 +62,39 @@
 
     <main>
         <section class="cocktail">
-            <img src="alt-test-image.jpg" alt="Cocktail Image">
+            <!-- <img src="alt-test-image.jpg" alt="Cocktail Image"> -->
             <h2 class="cocktail-name">Cocktail Name</h2>
             <p class="cocktail-glass">Glass Type</p>
             <ul class="cocktail-ingredients"></ul>
             <p class="cocktail-how-to-mix">Instructions go here.</p>
         </section>
     </main>
-    
-    <?php
-    $servername = "mariadb_db";  // Use your database host name here
-    $username = "root";          // Use your database username here
-    $password = "root";          // Use your database password here
-    $dbname = "users";      // Your database name
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        echo "<script>console.error('Connection failed: " . addslashes($conn->connect_error) . "');</script>";
-    } else {
-        echo "<script>console.log('Connected successfully to the database');</script>";
-
-        // Query to fetch data from users table
-        $sql = "SELECT username, password FROM users";
-        $result = $conn->query($sql);
-
-        if ($result && $result->num_rows > 0) {
-            // Fetch data and log to console
-            while($row = $result->fetch_assoc()) {
-                $userData = addslashes(json_encode($row));
-                echo "<script>console.log('User Data: ', JSON.parse('$userData'));</script>";
-            }
-        } else {
-            echo "<script>console.log('0 results or query failed');</script>";
-        }
-
-        // Close connection if open
-        if (!$conn->connect_error) {
-            $conn->close();
-        }
-    }
-    ?>
+    <?php if (isset($loginError)): ?>
+        <script>alert('<?php echo $loginError; ?>');</script>
+    <?php endif; ?>
 
     <footer>
         <p class="drink-counter" style="color: grey;">&nbsp;</p>
     </footer>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form id="loginForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit" name="loginSubmit">Login</button>
+            </form>
+        </div>
+    </div>
+
+
+
+ 
 </body>
 </html>
